@@ -2,6 +2,7 @@
 #include<string>
 #include<vector>
 #include <iomanip>
+using namespace std;
 template <typename T> class Item{
     public:
         T name;
@@ -17,7 +18,58 @@ template <typename T> class Item{
 };
 template<typename T> class Inventory{
     public:
-        // Write Your code 
+        std::vector<T> items;
+        // Write Your code
+        void addItem(Item<T>it);
+        void addNewItem(T item){
+            for (auto &item : items){
+                if (item.name == name){
+                    cout << "Item is already present in inventory" << endl;
+                    return;
+                }
+            }
+            items.push_back(items(T item));
+        }
+        void increaseQuantity(string name, int quantity){
+            for (auto &item : items){
+                if (item.name == name){
+                    item.quantity += quantity;
+                    return;
+                }
+            }
+            throw invalid_argument("item not found");
+        }
+        void updateItem(string name, int quantity, int category, int expiration){
+            for (auto &item : items){
+                if (item.name == name){
+                    item.expiration = expiration;
+                    item.category = category;
+                    item.quantity = quantity;
+                    return;
+                }
+            }
+            throw invalid_argument ("item not found");
+        }
+        void removeItem(string name){
+            for(size_t i=0; i < items.size(); ++i){
+                if (items[i].name == name) {
+                    items.erase(items.begin() + i);
+                    return;
+                }
+            }
+            throw invalid_argument("item not found");
+        }
+        int Total(){
+            return items.size();
+        }
+        void searchItem(string name){
+            for (auto &item : items){
+                cout << "Item found: " << item.name << ", Quanitity: " << item.quantity << endl;
+                return;
+            }
+            throw invalid_argument("Item not found");
+        }
+        // 
         void displayItems(){
             std::cout<<"-------Inventory-------"<<std::endl;
             std::cout<<std::left<<std::setw(20)<<"Name"<<std::setw(15)<<"Expiration"<<std::setw(15)<<"Quantity"<<std::setw(10)<<"Category"<<std::endl;
@@ -42,6 +94,37 @@ template<typename T>class Appointment{
 template<typename T>class AppointmentSystem{
         public:
         // Write Your code 
+        vector<T> ap;
+        std::vector<T> Appointment;
+        void schedule (string name, string ap_date, string ap_time, string CWID){
+            for(auto &appointment : Appointment) {
+                if (appointment.CWID == CWID) {
+                    cout << "you have a appointemt scheduled already" << endl;
+                    return;
+                }
+            }
+            Appointment.push_back(Appointment(name, ap_date, ap_time, CWID));
+        }
+        int Total_appointments( string ap_date, string ap_time){
+            int total = 0;
+            for (auto &appointment : Appointment){
+                if (appointment.ap_date == ap_date && appointment.ap_time == ap_time){
+                    ++total;
+                }
+            }
+            return total;
+
+        }
+         void removeRecent(){
+            if (Appointment.empty()){
+                Appointment.pop_back();
+            }else {
+                cout << "no appointments to remove" << endl;
+                
+            }
+         }
+        
+        //
         void display(){
             std::cout<<"-------Appointments-------"<<std::endl;
             std::cout<<std::left<<std::setw(20)<<"Name"<<std::setw(15)<<"Date"<<std::setw(15)<<"Time"<<std::setw(15)<<"CWID"<<std::endl;
@@ -51,7 +134,7 @@ template<typename T>class AppointmentSystem{
         }
 };
 int main(){
-    /* Remove comments and run following test cases
+    // Remove comments and run following test cases
     Inventory<std::string> i1;
     Item<std::string> I1("Protien Bar","05/09/2023","Snacks",4);
     i1.addNewItem(I1);
@@ -107,5 +190,5 @@ int main(){
     Appointment<std::string> a5("Chris Lynn","09/12/2023","12:00PM","879455714");
     s1.schedule(a4);
     s1.removeRecent();
-    s1.display();*/
+    s1.display();
 }
